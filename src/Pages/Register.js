@@ -13,7 +13,7 @@ class Register extends React.Component {
             formCadastro_email: '',
             formCadastro_senha: '',
             formCadastro_senhaConfirmacao: '',
-            mensagem : ''
+            mensagem: ''
         };
 
         //declarando as funções que irão manipular o state..
@@ -51,29 +51,29 @@ class Register extends React.Component {
 
         //objeto JSON que será postado para a API..
         var jsonRequest = {
-            nome : this.state.formCadastro_nome,
-            email : this.state.formCadastro_email,
-            senha : this.state.formCadastro_senha,
-            senhaConfirmacao : this.state.formCadastro_senhaConfirmacao
+            nome: this.state.formCadastro_nome,
+            email: this.state.formCadastro_email,
+            senha: this.state.formCadastro_senha,
+            senhaConfirmacao: this.state.formCadastro_senhaConfirmacao
         };
 
         //executando a requisição para a API..
         services.post(jsonRequest)
             .then(
                 data => {
-                    this.setState({ 
-                        mensagem : data.message, 
+                    this.setState({
+                        mensagem: data.message,
 
-                        formCadastro_nome : '',
-                        formCadastro_email : '',
-                        formCadastro_senha : '',
-                        formCadastro_senhaConfirmacao : ''
+                        formCadastro_nome: '',
+                        formCadastro_email: '',
+                        formCadastro_senha: '',
+                        formCadastro_senhaConfirmacao: ''
                     });
                 }
-            )   
+            )
             .catch(
                 e => {
-                    this.setState({ mensagem : 'Erro!' });
+                    this.setState({ mensagem: 'Erro!' });
                 }
             );
     }
@@ -104,7 +104,7 @@ class Register extends React.Component {
                             <div className="form-group">
                                 <label>Email:</label>
                                 <input type="email" className="form-control"
-                                    placeholder="Digite aqui" 
+                                    placeholder="Digite aqui"
                                     onChange={this.setEmail}
                                     value={this.state.formCadastro_email}
                                 />
@@ -113,7 +113,7 @@ class Register extends React.Component {
                             <div className="form-group">
                                 <label>Senha:</label>
                                 <input type="password" className="form-control"
-                                    placeholder="Digite aqui" 
+                                    placeholder="Digite aqui"
                                     onChange={this.setSenha}
                                     value={this.state.formCadastro_senha}
                                 />
@@ -122,7 +122,7 @@ class Register extends React.Component {
                             <div className="form-group">
                                 <label>Confirme sua Senha:</label>
                                 <input type="password" className="form-control"
-                                    placeholder="Digite aqui" 
+                                    placeholder="Digite aqui"
                                     onChange={this.setSenhaConfirmacao}
                                     value={this.state.formCadastro_senhaConfirmacao}
                                 />
@@ -132,12 +132,9 @@ class Register extends React.Component {
                                 <input type="submit" value="Realizar Cadastro"
                                     className="btn btn-success" />
                             </div>
-
                         </form>
-
                     </div>
                 </div>
-
             </div>
         )
     }
