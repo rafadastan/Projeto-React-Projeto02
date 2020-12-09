@@ -9,10 +9,10 @@ class Register extends React.Component {
 
         //declarando o state do componente..
         this.state = {
-            formCadastro_nome: '',
-            formCadastro_email: '',
-            formCadastro_senha: '',
-            formCadastro_senhaConfirmacao: '',
+            formCadastro_nome: '', errors_nome: [],
+            formCadastro_email: '', errors_email: [],
+            formCadastro_senha: '', errors_senha: [],
+            formCadastro_senhaConfirmacao: '', errors_senhaConfirmacao: [],
             mensagem: ''
         };
 
@@ -57,6 +57,14 @@ class Register extends React.Component {
             senhaConfirmacao: this.state.formCadastro_senhaConfirmacao
         };
 
+        //limpar as mensagens de erro..
+        this.setState({
+            errors_nome: [],
+            errors_email: [],
+            errors_senha: [],
+            errors_senhaConfirmacao: []
+        });
+
         //executando a requisição para a API..
         services.post(jsonRequest)
             .then(
@@ -73,7 +81,26 @@ class Register extends React.Component {
             )
             .catch(
                 e => {
-                    this.setState({ mensagem: 'Erro!' });
+
+                    var error = e.response;
+
+                    switch (error.status) {
+                        case 400:
+                            const errors = error.data.errors;
+
+                            this.setState({
+                                errors_nome: errors.Nome || [],
+                                errors_email: errors.Email || [],
+                                errors_senha: errors.Senha || [],
+                                errors_senhaConfirmacao: errors.SenhaConfirmacao || []
+                            });
+
+                            break;
+
+                        case 500:
+                            this.setState({ mensagem: error.data.message });
+                            break;
+                    }
                 }
             );
     }
@@ -99,6 +126,17 @@ class Register extends React.Component {
                                     onChange={this.setNome}
                                     value={this.state.formCadastro_nome}
                                 />
+                                <ul className="text-danger">
+                                    {
+                                        this.state.errors_nome.map(
+                                            function (item, i) {
+                                                return (
+                                                    <li key={i}>{item}</li>
+                                                )
+                                            }
+                                        )
+                                    }
+                                </ul>
                             </div>
 
                             <div className="form-group">
@@ -108,6 +146,17 @@ class Register extends React.Component {
                                     onChange={this.setEmail}
                                     value={this.state.formCadastro_email}
                                 />
+                                <ul className="text-danger">
+                                    {
+                                        this.state.errors_email.map(
+                                            function (item, i) {
+                                                return (
+                                                    <li key={i}>{item}</li>
+                                                )
+                                            }
+                                        )
+                                    }
+                                </ul>
                             </div>
 
                             <div className="form-group">
@@ -117,6 +166,17 @@ class Register extends React.Component {
                                     onChange={this.setSenha}
                                     value={this.state.formCadastro_senha}
                                 />
+                                <ul className="text-danger">
+                                    {
+                                        this.state.errors_senha.map(
+                                            function (item, i) {
+                                                return (
+                                                    <li key={i}>{item}</li>
+                                                )
+                                            }
+                                        )
+                                    }
+                                </ul>
                             </div>
 
                             <div className="form-group">
@@ -126,15 +186,29 @@ class Register extends React.Component {
                                     onChange={this.setSenhaConfirmacao}
                                     value={this.state.formCadastro_senhaConfirmacao}
                                 />
+                                <ul className="text-danger">
+                                    {
+                                        this.state.errors_senhaConfirmacao.map(
+                                            function (item, i) {
+                                                return (
+                                                    <li key={i}>{item}</li>
+                                                )
+                                            }
+                                        )
+                                    }
+                                </ul>
                             </div>
 
                             <div className="form-group">
                                 <input type="submit" value="Realizar Cadastro"
                                     className="btn btn-success" />
                             </div>
+
                         </form>
+
                     </div>
                 </div>
+
             </div>
         )
     }

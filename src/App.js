@@ -13,15 +13,14 @@ class App extends React.Component {
       <HashRouter>
 
         <div className="container mt-4">
-          <ul>
-            <li><NavLink to="/login">Autenticar Usuários</NavLink></li>
-            <li><NavLink to="/register">Criar conta de Usuário</NavLink></li>
-          </ul>
-          
+
+          <NavLink to="/login" className="btn btn-light btn-sm mr-1">Autenticar Usuários</NavLink>
+          <NavLink to="/register" className="btn btn-light btn-sm">Criar conta de Usuário</NavLink>
+
           <hr />
 
-          <Route path="/login" component={Login}/>
-          <Route path="/register" component={Register}/>
+          <Route path="/login" component={Login} />
+          <Route path="/register" component={Register} />
 
         </div>
 
