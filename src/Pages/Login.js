@@ -1,5 +1,6 @@
 import React from 'react';
 import * as services from '../Services/LoginServices';
+import * as configs from '../Configs/AuthConfig';
 
 class Login extends React.Component {
 
@@ -53,13 +54,14 @@ class Login extends React.Component {
             .then(
                 data => {
 
-                    console.log(data);
+                    //armazenar o TOKEN do usuario em localStorage
+                    configs.setAccessToken(data.token);
 
-                    this.setState({
-                        mensagem: "Usuário autenticado com sucesso",
-                        formCadastro_email: '',
-                        formCadastro_senha: ''
-                    });
+                    //armazenar os dados do usuario em localStorage
+                    configs.setUserData(JSON.stringify(data.usuario));
+
+                    //redirecionar para a página de area restrita
+                    configs.redirectToAdmin();
                 }
             )
             .catch(
